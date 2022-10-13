@@ -23,6 +23,11 @@ body{
     grid-template-columns: repeat(3, auto);
 }
 
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.x .cell:not(.x):not(.circle):hover::before{
+    background-color: rgba(95, 79, 79, 0.589) !important;
+}
+
 /* CELL */
 .cell{
     width: 100px;
@@ -32,6 +37,10 @@ body{
     justify-content: center;
     align-items: center;
     position: relative;
+}
+
+.cell.x, .cell.circle{
+    cursor: not-allowed;
 }
 
 .cell:nth-child(1),
@@ -60,7 +69,9 @@ body{
 
 /* X */
 .cell.x::before,
-.cell.x::after{
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.x .cell:not(.x):not(.circle):hover::before {
     content: "";
     height: calc(100px * 0.15);
     width: calc(100px * 0.9);
@@ -68,11 +79,13 @@ body{
     position: absolute;
 }
 
-.cell.x::before{
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before {
     transform: rotate(45deg);
 }
 
-.cell.x::after{
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after{
     transform: rotate(-45deg);
 }
 
