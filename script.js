@@ -4,6 +4,18 @@ const board = document.querySelector("[data-board]");
 
 let isCircleTurn; //variável q indica se é a vez do circulo jogar
 
+
+const winningCombinations = [ //combinações de vitória
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+];
+
 const statGame = () => { //inicialização do jogo, começando pelo X
     for(const cell of cellElements){
         cell.addEventListener("click", handleClick, {once: true}); //adiciona em cada célula um addEventListener com o nome 'click' e chama a função 'handleclick. Acontecendo só uma vez (once: true) para não sobrepor uma jogada anterior
@@ -12,6 +24,12 @@ const statGame = () => { //inicialização do jogo, começando pelo X
     
     board.classList.add("x");
 }
+
+//função que verifica a vitoria, puxando a const 'winningCombinations'. 'currentPlayer' é a classe atual da board, o jogador atual
+const checkForWin = (currentPlayer) => {
+
+}
+
 
 const placeMark = (cell, classToAdd) => { //função que recebe cell e classToAdd
     cell.classList.add(classToAdd);
@@ -40,8 +58,11 @@ const handleClick = (e) => { //(e) é elemento da celula = cell
     placeMark (cell, classToAdd);
 
     swapTurns (); //muda o símbolo
+
+    //verifica quem ganha
+
 }
 
-//, verifica quem ganha, verifica se deu empate, 
+// verifica se deu empate
 
 statGame();
