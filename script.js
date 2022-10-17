@@ -54,10 +54,10 @@ const checkForWin = (currentPlayer) => {
 };
 
 const checkForDraw = () => {    //checa se todas as células estão ocupadas e não ocorreu nenhuma vitória
-    retun [...cellElements].every(cell = > {
-        cell.
-    })
-}
+    return [...cellElements].every((cell) => {
+       return cell.classList.contains("x") || cell.classList.contains("circle")
+    });
+};  
 
 
 const placeMark = (cell, classToAdd) => { //função que recebe cell e classToAdd
@@ -88,16 +88,18 @@ const handleClick = (e) => { //(e) é elemento da celula = cell
 
     placeMark (cell, classToAdd);
 
-    swapTurns (); //muda o símbolo
-
-   
     const isWin = checkForWin(classToAdd);  //verifica quem ganha. 'classToAdd' represente o 'currentPlayer', o jogador atual
+
+    const isDraw = checkForDraw(); // verifica se deu empate
+
     if(isWin){
         endGame(false);
+    } else if (isDraw){
+        endGame(true)
+    }else {
+        swapTurns (); //muda o símbolo
     }
-}
-
-// verifica se deu empate
+};
 
 statGame();
 
