@@ -2,7 +2,7 @@ const cellElements = document.querySelectorAll("[data-cell"); //seleciona todas 
 const board = document.querySelector("[data-board]");
 const winningMessageTextElement = document.querySelector("[data-winning-message-text]");
 const winningMessage = document.querySelector("[data-winning-message]");
-
+const restarButton = document.querySelector("[data-restart-button]");
 
 let isCircleTurn; //variável q indica se é a vez do circulo jogar
 
@@ -20,22 +20,29 @@ const winningCombinations = [ //combinações de vitória
 
 const statGame = () => { //inicialização do jogo, começando pelo X
     for(const cell of cellElements){
+         isCircleTurn = false;
+
+        cell.classList.remove("circle");
+        cell.classList.remove("x");
+        cell.removeEventListener("click", handleClick);
         cell.addEventListener("click", handleClick, {once: true}); //adiciona em cada célula um addEventListener com o nome 'click' e chama a função 'handleclick. Acontecendo só uma vez (once: true) para não sobrepor uma jogada anterior
     } 
-    let isCircleTurn = false;
     
-    board.classList.add("x");
+    setBoardHoverClass();
+    winningMessage.classList.remove("show-winning-message");
 }
 
 
 const endGame = (isDraw) =>{   //função que encerra o jogo, verfificando se deu empate. draw = empate
     if (isDraw){
-        winningMessageTextElement.innerText = 'Empate!'
+        winningMessageTextElement.innerText = "Empate!";
     } else {
         winningMessageTextElement.innerText = isCircleTurn ? "O Venceu!" : "X venceu!";
     }
     winningMessage.classList.add("show-winning-message");
 };
+const RandleRestartClick = () => {
+}
 
 //função que verifica a vitoria, puxando a const 'winningCombinations'. 'currentPlayer' é a classe atual da board, o jogador atual
 const checkForWin = (currentPlayer) => { 
@@ -46,16 +53,18 @@ const checkForWin = (currentPlayer) => {
     });
 };
 
+const checkForDraw = () => {    //checa se todas as células estão ocupadas e não ocorreu nenhuma vitória
+    retun [...cellElements].every(cell = > {
+        cell.
+    })
+}
+
 
 const placeMark = (cell, classToAdd) => { //função que recebe cell e classToAdd
     cell.classList.add(classToAdd);
 }
 
-//função para mudar o símbolo
-
-const swapTurns = () => {
-    isCircleTurn = !isCircleTurn //reverte o símbolo
-
+const setBoardHoverClass = () => {
     board.classList.remove("circle"); //remove o circulo e o x da board para não ser adicionados vários em sequencia
     board.classList.remove("x");
 
@@ -64,12 +73,18 @@ const swapTurns = () => {
     } else {
         board.classList.add("x");
     }
+};
+
+const swapTurns = () => {
+    isCircleTurn = !isCircleTurn; //reverte o símbolo
+
+    setBoardHoverClass();
 }
 
 const handleClick = (e) => { //(e) é elemento da celula = cell
     const cell = e.target;
     //adiciona o simbolo (x ou circulo)
-    const classToAdd = isCircleTurn ? 'circle' : 'x'; //é a vez do circulo jogar? se sim, adiciona à celula a classe 'circle', senão adiciona a classe 'x'
+    const classToAdd = isCircleTurn ? "circle" : "x"; //é a vez do circulo jogar? se sim, adiciona à celula a classe 'circle', senão adiciona a classe 'x'
 
     placeMark (cell, classToAdd);
 
@@ -85,3 +100,5 @@ const handleClick = (e) => { //(e) é elemento da celula = cell
 // verifica se deu empate
 
 statGame();
+
+restarButton.addEventListener("click", statGame); //reiniciar o jogo
