@@ -1,5 +1,7 @@
 const cellElements = document.querySelectorAll("[data-cell"); //seleciona todas as células, '[]' seleciona um atributo
 const board = document.querySelector("[data-board]");
+const winningMessageTextElement = document.querySelector("[data-winning-message-text]");
+const winningMessage = document.querySelector("[data-winning-message]");
 
 
 let isCircleTurn; //variável q indica se é a vez do circulo jogar
@@ -25,10 +27,24 @@ const statGame = () => { //inicialização do jogo, começando pelo X
     board.classList.add("x");
 }
 
-//função que verifica a vitoria, puxando a const 'winningCombinations'. 'currentPlayer' é a classe atual da board, o jogador atual
-const checkForWin = (currentPlayer) => {
 
-}
+const endGame = (isDraw) =>{   //função que encerra o jogo, verfificando se deu empate. draw = empate
+    if (isDraw){
+        winningMessageTextElement.innerText = 'Empate!'
+    } else {
+        winningMessageTextElement.innerText = isCircleTurn ? "O Venceu!" : "X venceu!";
+    }
+    winningMessage.classList.add("show-winning-message");
+};
+
+//função que verifica a vitoria, puxando a const 'winningCombinations'. 'currentPlayer' é a classe atual da board, o jogador atual
+const checkForWin = (currentPlayer) => { 
+    return winningCombinations.some((combination) => { //verifica se alguma combinação está preenchida com o jogador atual, 'currentPlayer'
+        return combination.every((index) => {         //verifica se em cada célula na sequencia da combinação extá preenchida com o mesmo elemento,  ex: [1, 2, e 3] preenchida com 'x'
+            return cellElements[index].classList.contains(currentPlayer);
+        });                                        
+    });
+};
 
 
 const placeMark = (cell, classToAdd) => { //função que recebe cell e classToAdd
@@ -59,8 +75,11 @@ const handleClick = (e) => { //(e) é elemento da celula = cell
 
     swapTurns (); //muda o símbolo
 
-    //verifica quem ganha
-
+   
+    const isWin = checkForWin(classToAdd);  //verifica quem ganha. 'classToAdd' represente o 'currentPlayer', o jogador atual
+    if(isWin){
+        endGame(false);
+    }
 }
 
 // verifica se deu empate
