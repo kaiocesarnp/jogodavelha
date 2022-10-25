@@ -6,7 +6,6 @@ const restarButton = document.querySelector("[data-restart-button]");
 
 let isCircleTurn; //variável q indica se é a vez do circulo jogar
 
-
 const winningCombinations = [ //combinações de vitória
     [0, 1, 2],
     [3, 4, 5],
