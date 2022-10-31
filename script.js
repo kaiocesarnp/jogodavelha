@@ -31,7 +31,6 @@ const statGame = () => { //inicialização do jogo, começando pelo X
     winningMessage.classList.remove("show-winning-message");
 }
 
-
 const endGame = (isDraw) =>{   //função que encerra o jogo, verfificando se deu empate. draw = empate
     if (isDraw){
         winningMessageTextElement.innerText = "Empate!";
