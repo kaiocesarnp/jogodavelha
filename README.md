@@ -1,4 +1,4 @@
-# jogodavelha
+# Jogo da Velha
 
 Link do site:  https://kaiocesarnp.github.io/jogodavelha/
 
